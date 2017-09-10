@@ -12,6 +12,7 @@ import com.beerwithai.newscatcher.R;
 public class NewsView extends Activity
 {
     private WebView mWebView = null;
+    static boolean active = false;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -28,4 +29,15 @@ public class NewsView extends Activity
 
         mWebView.loadUrl(url);
     }
+
+    public void onStart(){
+        super.onStart();
+        active = true;
+    }
+
+    public void onStop() {
+        super.onStop();
+        active = false;
+    }
+
 }

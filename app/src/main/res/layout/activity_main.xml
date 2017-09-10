@@ -29,5 +29,11 @@
         android:layout_gravity="bottom|right"
         android:text="swipe right" />
 
+    <Button
+        android:id="@+id/favorite_this"
+        android:text="Favorite This"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center" />
 
 </com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>

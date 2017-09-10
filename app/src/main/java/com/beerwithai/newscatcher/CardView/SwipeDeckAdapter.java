@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,11 +62,14 @@ public class SwipeDeckAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Log.i("Layer type: ", Integer.toString(v.getLayerType()));
                 Log.i("Hardware Accel type:", Integer.toString(View.LAYER_TYPE_HARDWARE));
-                Intent intent = new Intent(context, NewsView.class);
-                intent.putExtra("url", urls[position]);
-                context.startActivity(intent);
+                if(NewsView.active == false) {
+                    Intent intent = new Intent(context, NewsView.class);
+                    intent.putExtra("url", urls[position]);
+                    context.startActivity(intent);
+                }
             }
         });
+
         return v;
     }
 }

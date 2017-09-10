@@ -1,18 +1,23 @@
 package com.beerwithai.newscatcher;
 
 import android.Manifest;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.SharedElementCallback;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,16 +40,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Wrapper;
 import java.util.ArrayList;
-
-import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import butterknife.BindView;
-import butterknife.BindViews;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
@@ -70,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         cardStack = (SwipeDeck) findViewById(R.id.swipe_deck);
-
         String url="http://starlord.hackerearth.com/newsjson";
         try {
             JSONArray t = new AsyncTaskRunner().execute(url).get();
@@ -82,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         swAdapter = new com.beerwithai.newscatcher.SwipeDeckAdapter(titleStringArray, urlStringArray, this);
         cardStack.setAdapter(swAdapter);
+        swAdapter.notifyDataSetChanged();
         cardStack.setCallback(new SwipeDeck.SwipeDeckCallback() {
             @Override
             public void cardSwipedLeft(long positionInAdapter) {
@@ -92,9 +87,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void cardSwipedRight(long positoinInAdapter) {
                 Log.i("MainActivity", "card was swiped right, position in adapter: " + positoinInAdapter);
-                Intent intent = new Intent(getApplicationContext(), NewsView.class);
-                intent.putExtra("url", urlTexts.get((int)positoinInAdapter));
-                startActivity(intent);
+                if(NewsView.active == false) {
+                    NewsView.active = true;
+                    Intent intent = new Intent(getApplicationContext(), NewsView.class);
+                    intent.putExtra("url", urlTexts.get((int) positoinInAdapter));
+                    startActivity(intent);
+                }
             }
 
 
@@ -116,7 +114,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        cardStack.scrollBy(0, 1);
+        btn3 = (Button) findViewById(R.id.favorite_this);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("favorite_news",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString(getString(R.string.favorites), urlStringArray[(int)cardStack.getAdapterIndex()]);
+                editor.commit();
+            }
+        });
+
+
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, String, JSONArray> {

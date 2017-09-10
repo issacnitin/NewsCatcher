@@ -23,6 +23,5 @@
             android:textSize="80dp"
             android:textColor="@color/colorPrimaryDark"
             />
-
     </LinearLayout>
 </android.support.v7.widget.CardView>
