@@ -24,9 +24,14 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:cardview-v7:26.+'
+    compile 'com.lorentzos.swipecards:library:1.0.9@aar'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.daprlabs.aaron:cardstack:0.3.1-beta0'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'com.daprlabs.aaron:swipedeck:2.0.6'
     testCompile 'junit:junit:4.12'
 }

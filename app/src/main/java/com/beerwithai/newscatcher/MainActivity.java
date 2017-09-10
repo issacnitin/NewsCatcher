@@ -1,6 +1,8 @@
 package com.beerwithai.newscatcher;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,18 +32,37 @@ import java.net.URLConnection;
 import java.sql.Wrapper;
 import java.util.ArrayList;
 
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import com.daprlabs.aaron.swipedeck.SwipeDeck;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    String[] newsArray = {"mobile", "android", "job", "ios"};
+
     TextView txtJson;
     JSONArray jsonArray;
     ArrayList<String> titleTexts=new ArrayList<String>(), urlTexts = new ArrayList<String>();
     boolean flag = false;
+    int i;
+    ArrayAdapter adapter;
+    String[] titleStringArray;
+    com.beerwithai.newscatcher.SwipeDeckAdapter swAdapter;
+    SwipeDeck cardStack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        cardStack = (SwipeDeck) findViewById(R.id.swipe_deck);
 
         String url="http://starlord.hackerearth.com/newsjson";
         try {
@@ -48,24 +70,51 @@ public class MainActivity extends AppCompatActivity {
         } catch(Exception e) {
 
         }
-        String[] titleStringArray = titleTexts.toArray(new String[titleTexts.size()]);
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,
-                R.layout.textview, titleStringArray);
+        titleStringArray = titleTexts.toArray(new String[titleTexts.size()]);
+
+
+        swAdapter = new com.beerwithai.newscatcher.SwipeDeckAdapter(titleStringArray, this);
+        cardStack.setAdapter(swAdapter);
+        cardStack.setCallback(new SwipeDeck.SwipeDeckCallback() {
+            @Override
+            public void cardSwipedLeft(long positionInAdapter) {
+                Log.i("MainActivity", "card was swiped left, position in adapter: " + positionInAdapter);
+            }
+
+            @Override
+            public void cardSwipedRight(long positoinInAdapter) {
+                Log.i("MainActivity", "card was swiped right, position in adapter: " + positoinInAdapter);
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlTexts.get((int)positoinInAdapter)));
+                startActivity(browserIntent);
+            }
+
+
+        });
 
         txtJson = (TextView) findViewById(R.id.label);
 
-        ListView listView = (ListView) findViewById(R.id.newsItems);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Button btn = (Button) findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlTexts.get(position)));
-                startActivity(browserIntent);
+            public void onClick(View v) {
+                cardStack.swipeTopCardLeft(180);
             }
         });
+        Button btn2 = (Button) findViewById(R.id.button2);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardStack.swipeTopCardRight(180);
+            }
+        });
+
+        cardStack.refreshDrawableState();
     }
 
+    static void makeToast(Context ctx, String s){
+        Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
+    }
 
     private class AsyncTaskRunner extends AsyncTask<String, String, JSONArray> {
 
