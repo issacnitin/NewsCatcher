@@ -1,13 +1,30 @@
 package com.beerwithai.newscatcher;
 
 import android.app.Activity;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.beerwithai.newscatcher.R;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
+
+import static com.beerwithai.newscatcher.NavigationActivity.getJSONObjectFromURL;
 
 public class NewsView extends Activity
 {
@@ -26,8 +43,28 @@ public class NewsView extends Activity
 
         Bundle bundle = getIntent().getExtras();
         String url = bundle.getString("url");
-
         mWebView.loadUrl(url);
+
+
+    }
+
+    private class CheckForInternet extends AsyncTask<String, String, Integer> {
+        @Override
+        protected Integer doInBackground(String... params) {
+            int iHTTPStatus = 0;
+            try {
+                DefaultHttpClient httpClient = new DefaultHttpClient();
+                HttpGet httpRequest = new HttpGet(params[0]);
+
+                HttpResponse httpResponse = httpClient.execute(httpRequest);
+                 iHTTPStatus = httpResponse.getStatusLine().getStatusCode();
+            } catch (Exception e) {
+                return 0;
+            }
+            if(iHTTPStatus == 200)
+                return 1;
+            return 0;
+        }
     }
 
     public void onStart(){

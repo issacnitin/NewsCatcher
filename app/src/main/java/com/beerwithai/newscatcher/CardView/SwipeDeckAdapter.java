@@ -12,11 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.beerwithai.newscatcher.MainActivity;
-import com.beerwithai.newscatcher.R;
-
-import java.util.List;
-
 public class SwipeDeckAdapter extends BaseAdapter {
 
     private String[] data;

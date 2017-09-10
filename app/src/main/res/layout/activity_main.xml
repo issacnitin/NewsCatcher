@@ -1,39 +1,54 @@
-<com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:swipedeck="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/swipeLayout"
-    android:orientation="vertical">
+    android:id="@+id/drawer_layout"
+    android:orientation="vertical"
+    tools:openDrawer="start"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.daprlabs.aaron.swipedeck.SwipeDeck
-        android:id="@+id/swipe_deck"
+    <include
+        layout="@layout/app_bar_navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="50dp"
-        swipedeck:max_visible="3"
-        swipedeck:card_spacing="15dp"
-        swipedeck:swipe_enabled="true"
-        />
+        android:layout_height="match_parent" />
 
-    <Button
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_navigation"
+        app:menu="@menu/activity_navigation_drawer" />
+
+    <com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:text="swipe left" />
-    <Button
+
+        <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:text="swipe right" />
 
-    <Button
-        android:id="@+id/favorite_this"
-        android:text="Favorite This"
-        android:layout_width="wrap_content"
+    <com.daprlabs.aaron.swipedeck.SwipeDeck
+        android:id="@+id/swipe_deck"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center" />
+        android:padding="100dp"
+        swipedeck:card_spacing="15dp"
+        swipedeck:max_visible="3"
+        swipedeck:swipe_enabled="true" />
+    </com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>
 
-</com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>
+</android.support.v4.widget.DrawerLayout>
