@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.SharedElementCallback;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +47,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
     boolean flag = false;
     int i;
     ArrayAdapter adapter;
-    String[] titleStringArray;
+    String[] titleStringArray, urlStringArray;
     com.beerwithai.newscatcher.SwipeDeckAdapter swAdapter;
     SwipeDeck cardStack;
+    Button btn, btn2, btn3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,37 +78,37 @@ public class MainActivity extends AppCompatActivity {
 
         }
         titleStringArray = titleTexts.toArray(new String[titleTexts.size()]);
+        urlStringArray = urlTexts.toArray(new String[urlTexts.size()]);
 
-
-        swAdapter = new com.beerwithai.newscatcher.SwipeDeckAdapter(titleStringArray, this);
+        swAdapter = new com.beerwithai.newscatcher.SwipeDeckAdapter(titleStringArray, urlStringArray, this);
         cardStack.setAdapter(swAdapter);
         cardStack.setCallback(new SwipeDeck.SwipeDeckCallback() {
             @Override
             public void cardSwipedLeft(long positionInAdapter) {
                 Log.i("MainActivity", "card was swiped left, position in adapter: " + positionInAdapter);
+
             }
 
             @Override
             public void cardSwipedRight(long positoinInAdapter) {
                 Log.i("MainActivity", "card was swiped right, position in adapter: " + positoinInAdapter);
-
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlTexts.get((int)positoinInAdapter)));
-                startActivity(browserIntent);
+                Intent intent = new Intent(getApplicationContext(), NewsView.class);
+                intent.putExtra("url", urlTexts.get((int)positoinInAdapter));
+                startActivity(intent);
             }
 
 
         });
 
-        txtJson = (TextView) findViewById(R.id.label);
-
-        Button btn = (Button) findViewById(R.id.button);
+        btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cardStack.swipeTopCardLeft(180);
             }
         });
-        Button btn2 = (Button) findViewById(R.id.button2);
+
+        btn2 = (Button) findViewById(R.id.button2);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,11 +116,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        cardStack.refreshDrawableState();
-    }
-
-    static void makeToast(Context ctx, String s){
-        Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
+        cardStack.scrollBy(0, 1);
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, String, JSONArray> {
@@ -141,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
             //progressDialog = ProgressDialog.show(MainActivity.this, "ProgressDialog", "Wait for "+time.getText().toString()+ " seconds");
         }
 
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            super.onPostExecute(jsonArray);
+        }
 
         @Override
         protected void onProgressUpdate(String... text) {

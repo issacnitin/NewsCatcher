@@ -9,11 +9,12 @@
     <com.daprlabs.aaron.swipedeck.SwipeDeck
         android:id="@+id/swipe_deck"
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="wrap_content"
         android:padding="50dp"
         swipedeck:max_visible="3"
         swipedeck:card_spacing="15dp"
-        swipedeck:swipe_enabled="true"/>
+        swipedeck:swipe_enabled="true"
+        />
 
     <Button
         android:id="@+id/button"
@@ -27,5 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:text="swipe right" />
+
 
 </com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>

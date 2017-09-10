@@ -1,6 +1,7 @@
 package com.beerwithai.newscatcher;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,10 +19,12 @@ import java.util.List;
 public class SwipeDeckAdapter extends BaseAdapter {
 
     private String[] data;
+    private String[] urls;
     private Context context;
 
-    public SwipeDeckAdapter(String[] data, Context context) {
+    public SwipeDeckAdapter(String[] data, String[] urls, Context context) {
         this.data = data;
+        this.urls = urls;
         this.context = context;
     }
 
@@ -58,6 +61,9 @@ public class SwipeDeckAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Log.i("Layer type: ", Integer.toString(v.getLayerType()));
                 Log.i("Hardware Accel type:", Integer.toString(View.LAYER_TYPE_HARDWARE));
+                Intent intent = new Intent(context, NewsView.class);
+                intent.putExtra("url", urls[position]);
+                context.startActivity(intent);
             }
         });
         return v;
