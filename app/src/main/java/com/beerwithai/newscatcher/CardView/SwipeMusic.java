@@ -61,12 +61,11 @@ public class SwipeMusic extends android.support.v4.app.Fragment {
         int height = bm.getHeight();
         float scaleWidth = ((float) newWidth) / width;
         float scaleHeight = ((float) newHeight) / height;
-        // CREATE A MATRIX FOR THE MANIPULATION
+
         Matrix matrix = new Matrix();
-        // RESIZE THE BIT MAP
+
         matrix.postScale(scaleWidth, scaleHeight);
 
-        // "RECREATE" THE NEW BITMAP
         Bitmap resizedBitmap = Bitmap.createBitmap(
                 bm, 0, 0, width, height, matrix, false);
         bm.recycle();
@@ -130,12 +129,7 @@ public class SwipeMusic extends android.support.v4.app.Fragment {
             @Override
             public void cardSwipedRight(long positoinInAdapter) {
                 Log.i("NavigationActivity", "card was swiped right, position in adapter: " + positoinInAdapter);
-                if(NewsView.active == false) {
-                    NewsView.active = true;
-                    Intent intent = new Intent(getContext(), NewsView.class);
-                    intent.putExtra("url", urlTexts.get((int) positoinInAdapter));
-                    startActivity(intent);
-                }
+
             }
 
 
