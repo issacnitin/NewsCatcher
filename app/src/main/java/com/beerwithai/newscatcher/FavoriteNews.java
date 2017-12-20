@@ -32,7 +32,7 @@ public class FavoriteNews extends AppCompatActivity {
 
         ListView lv = (ListView) findViewById(R.id.fav_news);
         ArrayList<String> arr = new ArrayList<String>();
-        settings = getSharedPreferences("favorite_news", MODE_PRIVATE);
+        settings = getSharedPreferences("favorite_music", MODE_PRIVATE);
 
         // Writing data to SharedPreferences
         SharedPreferences.Editor editor = settings.edit();

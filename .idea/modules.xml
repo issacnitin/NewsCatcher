@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NewsCatcher.iml" filepath="$PROJECT_DIR$/NewsCatcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OlaPlay.iml" filepath="$PROJECT_DIR$/OlaPlay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

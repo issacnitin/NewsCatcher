@@ -3,10 +3,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/see_news"
-            android:title="News" />
+            android:id="@+id/swip_music"
+            android:title="Swipe Music" />
         <item
-            android:id="@+id/favorite_news"
+            android:id="@+id/search_music"
+            android:title="Search" />
+        <item
+            android:id="@+id/favorite_music"
             android:title="Favorites" />
     </group>
 

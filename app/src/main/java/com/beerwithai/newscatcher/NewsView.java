@@ -17,19 +17,10 @@ import com.beerwithai.newscatcher.R;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.concurrent.ExecutionException;
-
-import static com.beerwithai.newscatcher.NavigationActivity.getJSONObjectFromURL;
-
 public class NewsView extends Activity
 {
     private WebView mWebView = null;
-    static boolean active = false;
+    public static boolean active = false;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)

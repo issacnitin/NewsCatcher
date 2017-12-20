@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">NewsCatcher</string>
+    <string name="app_name">OkMusic</string>
     <string name="hello_world">Hello World!</string>
     <string name="favorites"></string>
-    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_activity_navigation">Find your music</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -99,4 +99,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_favorite_news">FavoriteNews</string>
+    <string name="title_activity_search_music">SearchMusic</string>
 </resources>

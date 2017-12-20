@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:swipedeck="http://schemas.android.com/apk/res-auto">
+
+
+    <com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="swipe left" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:text="swipe right" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"/>
+
+
+        <com.daprlabs.aaron.swipedeck.SwipeDeck
+            android:id="@+id/swipe_deck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="100dp"
+
+            swipedeck:card_spacing="15dp"
+            swipedeck:max_visible="3"
+            swipedeck:swipe_enabled="true" />
+    </com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>
+</android.support.constraint.ConstraintLayout>

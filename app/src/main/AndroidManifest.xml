@@ -27,6 +27,10 @@
         <activity
             android:name=".FavoriteNews"
             android:label="@string/title_activity_favorite_news"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CardView.SearchMusic"
+            android:label="@string/title_activity_search_music"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
